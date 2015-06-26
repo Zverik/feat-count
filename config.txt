@@ -1,6 +1,5 @@
 barrier-(fence|gate);len;Заборы
 building;cnt;Здания
-building-address;cnt;Адреса
 (amenity|shop|historic)-.*;cnt;POI
 amenity-(cafe|restaurant|fast_food).*;cnt;Кафе и рестораны
 amenity-(pub|bar);cnt;Бары и пабы
