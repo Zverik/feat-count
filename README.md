@@ -41,6 +41,20 @@
 
     ./calc_stat.sh --csv config.txt Australia.mwm
 
+### Проблемы?
+
+Если скрипт пишет, что не найден `find_generator_tool.sh`, то нужно указать
+путь к репозиторию omim:
+
+    OMIM_PATH=../omim-zv ./calc_stat.sh config.txt Australia.mwm
+
+Если скрипт выводит нули для всех полей, скрипт находит неправильный
+`generator_tool`, собранный не из ветки статистики. Например, релиз
+вместо дебага. Который из них, можно посмотреть в первой строчке вывода.
+Придётся указать путь к файлу (`GENERATOR_TOOL`) или к каталогу сборки:
+
+    BUILD_PATH=../build-omim-debug OMIM_PATH=../omim-zv ./calc_stat.sh config.txt Austria.mwm
+
 ## Как оно работает
 
 Для получения количества объектов и длины линий по каждому типу используется

@@ -1,5 +1,5 @@
 #!/bin/bash
-GENERATOR_TOOL=../../git/build-omim-zv-desktop-Debug/out/debug/generator_tool
+set -u -e
 
 usage() {
   echo "This script calculates statistics for a given MWM file."
@@ -10,8 +10,6 @@ usage() {
   echo "Threshold is for printing values in percents, default is 1, must be integer"
   exit 1
 }
-
-set -u -e
 
 if [ $# -gt 0 -a "$1" == "--csv" ]; then
   CSV=--csv
@@ -25,8 +23,8 @@ FORMAT_PY="$(dirname "$0")/format_stat.py"
 SUM_PY="$(dirname "$0")/sum_stat.py"
 THRESHOLD=1
 [ ! -f "$FORMAT_PY" ] && echo "Cannot find $FORMAT_PY" && exit 1
-export OMIM_PATH="${OMIM_PATH:-$(cd "$(dirname "$0")/../../git/omim-zv"; pwd)}"
-source "$OMIM_PATH/tools/unix/find_generator_tool.sh" > /dev/null
+export OMIM_PATH="${OMIM_PATH:-$(cd "$(dirname "$0")/../omim"; pwd)}"
+source "$OMIM_PATH/tools/unix/find_generator_tool.sh" 1>&2
 
 if [ "$(uname)" == "Darwin" ]; then
   INTDIR=$(mktemp -d -t calcstat)
