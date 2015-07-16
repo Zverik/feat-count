@@ -16,7 +16,7 @@ for old in "$2"/*.mwm; do
   if [ -f "$3/$BASE_NAME.mwm" ]; then
     echo
     echo "$BASE_NAME"
-    bash calc_stat.sh --csv$HEAD "$1" "$2/$BASE_NAME.mwm" x $THRESHOLD "$3/$BASE_NAME.mwm"
+    bash "$(dirname "$0")/calc_stat.sh" --csv$HEAD "$1" "$2/$BASE_NAME.mwm" x $THRESHOLD "$3/$BASE_NAME.mwm"
     HEAD=
   fi
 done
