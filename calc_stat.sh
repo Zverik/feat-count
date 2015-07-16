@@ -13,7 +13,7 @@ usage() {
 
 [ $# -lt 2 ] && usage
 
-if [ $# -gt 0 -a ( "$1" == "--csv" -o "$1" == "--csvh" ) ]; then
+if [ $# -gt 0 -a \( "$1" == "--csv" -o "$1" == "--csvh" \) ]; then
   CSV=--csv
   if [ "$1" == "--csvh" ]; then
     echo "sep=;"
