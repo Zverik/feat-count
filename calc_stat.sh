@@ -11,12 +11,18 @@ usage() {
   exit 1
 }
 
-if [ $# -gt 0 -a "$1" == "--csv" ]; then
+[ $# -lt 2 ] && usage
+
+if [ $# -gt 0 -a ( "$1" == "--csv" -o "$1" == "--csvh" ) ]; then
   CSV=--csv
+  if [ "$1" == "--csvh" ]; then
+    echo "sep=;"
+    echo "Критерий;Было;Стало;Ед.;Разница;Ед.;В процентах"
+  fi
   shift
+  [ $# -lt 2 ] && usage
 fi
 
-[ $# -lt 2 ] && usage
 CONFIG="$1"
 shift
 FORMAT_PY="$(dirname "$0")/format_stat.py"
@@ -39,7 +45,7 @@ TMP="$INTDIR/tmp"
 while [ $# -gt 0 ]; do
   if [ "$1" == "x" ]; then
     TARGET="$INTDIR/new"
-    if [ $# -gt 1 -a -n "${2##*[!0-9]*}" ]; then
+    if [ $# -gt 1 -a -n "${2##*[!0-9.]*}" ]; then
       THRESHOLD=$2
       shift
     fi

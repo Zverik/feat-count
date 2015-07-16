@@ -10,12 +10,13 @@ fi
 THRESHOLD=0
 [ $# -gt 3 ] && THRESHOLD=$4
 
-echo "Критерий;Было;Стало;Ед.;Разница;Ед.;В процентах"
+HEAD=h
 for old in "$2"/*.mwm; do
   BASE_NAME="$(basename "$old" .mwm)"
   if [ -f "$3/$BASE_NAME.mwm" ]; then
     echo
     echo "$BASE_NAME"
-    bash calc_stat.sh --csv "$1" "$2/$BASE_NAME.mwm" x $THRESHOLD "$3/$BASE_NAME.mwm"
+    bash calc_stat.sh --csv$HEAD "$1" "$2/$BASE_NAME.mwm" x $THRESHOLD "$3/$BASE_NAME.mwm"
+    HEAD=
   fi
 done

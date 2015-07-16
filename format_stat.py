@@ -75,11 +75,12 @@ else:
 for param in config:
   st = format_res(stats[param[0]], param[1])
   if threshold < 0:
-    if csv:
-      #print ';'.join([str(c) for c in (param[2], stats[param[0]], param[1])])
-      print ';'.join([str(c) for c in (param[2], st[0], st[1])])
-    else:
-      print "{0}: {1} {2}".format(param[2], st[0], st[1])
+    if st[0] > 0.0:
+      if csv:
+        #print ';'.join([str(c) for c in (param[2], stats[param[0]], param[1])])
+        print ';'.join([str(c) for c in (param[2], st[0], st[1])])
+      else:
+        print "{0}: {1} {2}".format(param[2], st[0], st[1])
   else:
     nst = format_res(new_stats[param[0]], param[1])
     diff = format_res(new_stats[param[0]] - stats[param[0]], param[1])
