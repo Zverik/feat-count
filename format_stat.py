@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 import sys, re
 
-RE_STAT = re.compile(r'(?:\d+\. )?([\w:|-]+?)\|: size = \d+; count = (\d+); length = ([0-9.e+-]+)\s*')
+RE_STAT = re.compile(r'(?:\d+\. )?([\w:|-]+?)\|: size = \d+; count = (\d+); length = ([0-9.e+-]+) m; area = ([0-9.e+-]+) m²\s*')
 
 def read_stat(f):
   stats = []
   for line in f:
     m = RE_STAT.match(line)
     if m:
-      stats.append({ "name": m.group(1).replace('|', '-'), "cnt": int(m.group(2)), "len": float(m.group(3)) })
+      stats.append({ "name": m.group(1).replace('|', '-'), "cnt": int(m.group(2)), "len": float(m.group(3)), "area": float(m.group(4)) })
   return stats
 
 def read_config(f):
@@ -28,7 +28,12 @@ def process_stat(config, stats):
     res = 0
     for typ in stats:
       if param[0].match(typ['name']):
-        res += typ['len'] if param[1] == 'len' else typ['cnt']
+        if param[1] == 'len':
+          res += typ['len']
+        elif param[1] == 'area':
+          res += typ['area']
+        else:
+          res += typ['cnt']
     result[param[0]] = res
   return result
 
@@ -45,6 +50,17 @@ def format_res(res, typ):
     else:
       res /= 1000000
       unit = 'тыс. км'
+    if res != 0:
+      res = '{0:.2f}'.format(res)
+  elif typ == 'area':
+    if abs(res) < 10000:
+      unit = 'м²'
+    elif abs(res) < 1000000000:
+      res /= 1000000
+      unit = 'км²'
+    else:
+      res /= 1000000000
+      unit = 'тыс. км²'
     if res != 0:
       res = '{0:.2f}'.format(res)
   else:

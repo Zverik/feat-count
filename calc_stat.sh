@@ -53,7 +53,7 @@ while [ $# -gt 0 ]; do
     SOURCE_PATH="$(dirname "$1")"
     SOURCE_NAME="$(basename "$1" .mwm)"
     [ ! -f "$SOURCE_PATH/$SOURCE_NAME.mwm" ] && fail "Cannot find $SOURCE_PATH/$SOURCE_NAME.mwm" && exit 2
-    "$GENERATOR_TOOL" --data_path="$SOURCE_PATH" --user_resource_path="$OMIM_PATH/data/" --calc_statistics --output="$SOURCE_NAME" > "$TMP" 2>&1
+    "$GENERATOR_TOOL" --data_path="$SOURCE_PATH" --user_resource_path="$OMIM_PATH/data/" --type_statistics --output="$SOURCE_NAME" > "$TMP" 2>&1
     if [ -e "$TARGET" ]; then
       python "$SUM_PY" "$TARGET" "$TMP" > "$TARGET.2"
       mv "$TARGET.2" "$TARGET"
