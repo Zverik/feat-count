@@ -14,7 +14,10 @@ amenity-toilets;cnt;Туалеты
 amenity-(waste_disposal|recycling);cnt;Мусорные баки
 highway-(motorway|trunk|primary|secondary|tertiary|residential|unclassified|service|track|living_street)(_link)?(-.*)?;len;Автодорожная сеть
 highway-(footway|path|pedestrian|steps).*;len;Пешеходные дорожки
-highway-.*-(bridge|tunnel);len;Мосты и туннели
+highway-.*-bridge;len;Мосты
+highway-.*-tunnel;len;Туннели
+highway-(footway|path|steps)-bridge;len;Пешеходные мосты
+highway-(footway|path|steps)-tunnel;len;Пешеходные туннели
 highway-steps.*;len;Лестницы
 highway-speed_camera;cnt;Камеры контроля скорости
 internet_access-wlan;cnt;Точки доступа Wi-Fi
