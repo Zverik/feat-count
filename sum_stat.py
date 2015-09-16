@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import sys, re
 
-RE_STAT = re.compile(r'(?:\d+\. )?([\w:|-]+?)\|: size = \d+; count = (\d+); length = ([0-9.e+-]+)\s*')
+RE_STAT = re.compile(r'(?:\d+\. )?([\w:|-]+?)\|: size = \d+; count = (\d+); length = ([0-9.e+-]+) m; area = ([0-9.e+-]+) m²\s*')
 
 if len(sys.argv) < 3:
   print "Usage: {0} <first> <second> [etc etc]".format(sys.argv[0])
@@ -15,7 +15,7 @@ with open(sys.argv[1], 'r') as f:
     if m:
       k = m.group(1)
       order.append(k)
-      result[k] = [int(m.group(2)), float(m.group(3))]
+      result[k] = [int(m.group(2)), float(m.group(3)), float(m.group(4))]
 
 for i in range(2, len(sys.argv)):
   with open(sys.argv[i], 'r') as f:
@@ -25,9 +25,10 @@ for i in range(2, len(sys.argv)):
         k = m.group(1)
         if not k in result:
           order.append(k)
-          result[k] = [0, 0.0]
+          result[k] = [0, 0.0, 0.0]
         result[k][0] += int(m.group(2))
         result[k][1] += float(m.group(3))
+        result[k][2] += float(m.group(4))
 
 for k in order:
-  print "1. {0}|: size = 0; count = {1}; length = {2}".format(k, result[k][0], result[k][1])
+  print "{0}|: size = 0; count = {1}; length = {2} m; area = {3} m²".format(k, result[k][0], result[k][1], result[k][2])
