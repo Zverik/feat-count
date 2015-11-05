@@ -34,7 +34,7 @@ def process_stat(config, stats):
           res += typ['area']
         else:
           res += typ['cnt']
-    result[param[0]] = res
+    result[str(param[0])+param[1]] = res
   return result
 
 def format_res(res, typ):
@@ -89,7 +89,8 @@ else:
   threshold = -1
 
 for param in config:
-  st = format_res(stats[param[0]], param[1])
+  k = str(param[0]) + param[1]
+  st = format_res(stats[k], param[1])
   if threshold < 0:
     if st[0] > 0.0:
       if csv:
@@ -98,9 +99,9 @@ for param in config:
       else:
         print "{0}: {1} {2}".format(param[2], st[0], st[1])
   else:
-    nst = format_res(new_stats[param[0]], param[1])
-    diff = format_res(new_stats[param[0]] - stats[param[0]], param[1])
-    percent = 0 if stats[param[0]] <= 0 else (new_stats[param[0]] - stats[param[0]]) * 100.0 / stats[param[0]]
+    nst = format_res(new_stats[k], param[1])
+    diff = format_res(new_stats[k] - stats[k], param[1])
+    percent = 0 if stats[k] <= 0 else (new_stats[k] - stats[k]) * 100.0 / stats[k]
     if abs(percent) >= threshold:
       if csv:
         print ';'.join([str(c) for c in (param[2], st[0], nst[0], st[1], diff[0], diff[1], percent / 100)])
